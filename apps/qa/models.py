@@ -1,10 +1,12 @@
 from django.db import models
+from apps.users.models import User
 
 
 class Question(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=40)
     content = models.TextField()
+    user = models.ForeignKey(User, related_name='questions')
     create_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField('Tag')
 
@@ -15,6 +17,7 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name='answers')
     content = models.TextField()
+    user = models.ForeignKey(User, related_name='answers')
     create_at = models.DateTimeField(auto_now_add=True)
     is_true = models.BooleanField(default=False)
 
