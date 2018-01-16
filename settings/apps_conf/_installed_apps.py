@@ -13,7 +13,7 @@ DJANGO_APPS = [
 
 MY_APPS = [
     'apps.qa',
-    # 'apps.users',
+    'apps.users',
 ]
 
 

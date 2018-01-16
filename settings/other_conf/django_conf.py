@@ -1,2 +1,2 @@
-# AUTH_USER_MODEL = 'nd_user.NDUser'
+AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/user/login'
