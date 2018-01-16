@@ -5,10 +5,6 @@ from .apps_conf import *
 
 try:
     from .local_settings import *
-
-    RAVEN_CONFIG = {
-        'dsn': 'https://63ba3f0edeb1469cbd3714b08f699e8d:cf5207a6860c4766994d1e120fa3add3@sentry.io/250939',
-    }
 except ImportError:
     from .dev import *
     # INSTALLED_APPS += ['sslserver']

@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic import ListView
+from .models import Question
 
-# Create your views here.
+
+class QuestionListView(ListView):
+    model = Question
+    paginate_by = 20
+    template_name = 'qa/list.html'
