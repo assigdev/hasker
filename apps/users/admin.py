@@ -5,7 +5,7 @@ from .models import User
 
 
 @admin.register(User)
-class MyUserAdmin(UserAdmin):
+class HaskerUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'nickname', 'avatar')}),

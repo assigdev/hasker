@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic import CreateView
+from .forms import HaskerUserCreationForm
 
-# Create your views here.
+
+class CreateUserView(CreateView):
+    template_name = 'users/sign_up.html'
+    form_class = HaskerUserCreationForm
+    success_url = '/'
