@@ -1,20 +1,19 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Sign Up
+    Add Question
 {% endblock %}
 
-
 {% block content %}
-    <h2>Sign Up</h2>
+     <h2>Add Question</h2>
 
-    <form action="{% url 'users:sign_up' %}"
+    <form action="{% url 'qa:create' %}"
           method="post"
           enctype="multipart/form-data"
           class="pure-form pure-form-stacked"
     >
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Create Account" class="form-control btn-primary col-2">
+        <input type="submit" value="Save" class="form-control btn-primary col-2">
     </form>
 {% endblock %}

@@ -12,5 +12,4 @@ def get_avatar_path(instance, filename):
 
 
 class User(AbstractUser):
-    nickname = models.CharField(max_length=40, blank=True)
     avatar = models.ImageField(upload_to=get_avatar_path, blank=True, null=True)

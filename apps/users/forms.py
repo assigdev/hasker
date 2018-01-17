@@ -8,7 +8,15 @@ class HaskerUserCreationForm(UserCreationForm):
         model = User
         fields = (
             "username",
-            "nickname",
+            "email",
+            "avatar",
+        )
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = (
             "email",
             "avatar",
         )

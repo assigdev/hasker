@@ -16,9 +16,13 @@
         <div class="col-4">
             {% if user.is_authenticated %}
                 <div class="row">
-                    <div class="offset-4 col4"><img width="60px" src="{{ user.avatar.url }}" alt=""></div>
+                    <div class="offset-4 col4">
+                        <a href="{% url 'users:setting' %}">
+                            <img width="60px" src="{{ user.avatar.url }}" alt="">
+                        </a>
+                    </div>
                     <div class="offset-1 col4">
-                        <a href=""><h4>{{ user.username }}</h4></a>
+                        <a href="{% url 'users:setting' %}"><h4>{{ user.username }}</h4></a>
                         <a href="{% url 'users:logout' %}"><span style="font-size: 28px;"
                                                                  class="oi oi-account-logout"></span></a>
                     </div>
