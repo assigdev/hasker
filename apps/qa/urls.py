@@ -4,7 +4,8 @@ from .views import (
     QuestionCreateView,
     QuestionDetailWithAnswerListView,
     QuestionSearchListView,
-    QuestionTagListView
+    QuestionTagListView,
+    QuestionUserListView,
 )
 from .views_ajax import set_answer_true_view
 
@@ -14,5 +15,6 @@ urlpatterns = [
     url(r'^search$', QuestionSearchListView.as_view(), name='search'),
     url(r'^question/(?P<slug>[\w-]+)/$', QuestionDetailWithAnswerListView.as_view(), name='detail'),
     url(r'^tag/(?P<tag>[\w-]+)/$', QuestionTagListView.as_view(), name='tag'),
+    url(r'^user/(?P<username>[\w-]+)/$', QuestionUserListView.as_view(), name='user'),
     url(r'^set_answer_true/(?P<pk>\d+)$', set_answer_true_view, name='set_answer_true'),
 ]

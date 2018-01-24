@@ -1,6 +1,8 @@
 .star {
     visibility: hidden;
     font-size: 32px;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .star-wrap:hover .star {
@@ -16,4 +18,39 @@
 .star.is_true {
     visibility: visible;
     color: #46799b;
+}
+
+
+.tag, .trand_value {
+    margin-left: 10px !important;
+    margin-bottom: 10px;
+    padding: 7px !important;
+}
+
+.trand_value {
+    color: white;
+    font-size: 18px;
+    width: 50px;
+}
+
+
+.title {
+    margin-bottom: 40px;
+}
+
+.border-bottom {
+    border-bottom: 2px solid lightgray;
+        margin-bottom: 20px;
+
+}
+
+.border-bottom-max {
+    border-bottom: 2px solid lightgray;
+        margin-bottom: 20px;
+    padding-bottom: 30px;
+
+}
+
+.question {
+
 }

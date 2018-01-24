@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, CreateView
 from django.views.generic.edit import FormMixin
+from django.http import Http404
 
 from utils import get_unique_slug
 from .forms import QuestionForm, AnswerForm
@@ -15,23 +16,35 @@ class QuestionListView(ListView):
     template_name = 'qa/list.html'
     context_object_name = 'questions'
 
+    def get_queryset(self):
+        queryset = super(QuestionListView, self).get_queryset()
+        order_by = self.request.GET.get('order_by', None)
+        if order_by == 'hot':
+            queryset = queryset.order_by('vote_count')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(QuestionListView, self).get_context_data(**kwargs)
+        order_by = self.request.GET.get('order_by', None)
+        if order_by == 'hot':
+            context['hot'] = True
+        return context
+
 
 class QuestionSearchListView(QuestionListView):
     template_name = 'qa/search.html'
 
     def get_queryset(self):
-        queryset = []
+        queryset = super().get_queryset()
         search_string = self.request.GET.get('q', None)
-        print(search_string)
-        print('*******************************')
         if search_string is not None:
-            queryset = self.model.objects.filter(title__icontains=search_string)
+            queryset = queryset.filter(title__icontains=search_string)
             queryset = queryset.order_by('title')
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_q'] = self.request.GET.get('q', None)
+        context['current_q'] = self.request.GET.get('q')
         return context
 
 
@@ -39,16 +52,34 @@ class QuestionTagListView(QuestionListView):
     template_name = 'qa/tag.html'
 
     def get_queryset(self):
-        queryset = []
-        tag = self.kwargs.get('tag', None)
-        if tag is not None:
-            queryset = self.model.objects.filter(tags__title=tag)
-            queryset = queryset.order_by('title')
+        queryset = super().get_queryset()
+        tag = self.kwargs.get('tag')
+        queryset = queryset.filter(tags__title=tag)
+        queryset = queryset.order_by('title')
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_tag'] = 'tag:' + self.kwargs.get('tag', '')
+        context['current_tag'] = 'tag:' + self.kwargs.get('tag')
+        return context
+
+
+class QuestionUserListView(QuestionListView):
+    template_name = 'qa/user.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        username = self.kwargs.get('username', None)
+        if username is None:
+            raise Http404
+        queryset = queryset.filter(create_by__username=username)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.kwargs.get('username', None)
+        if username is not None:
+            context['username'] = username
         return context
 
 
@@ -61,16 +92,12 @@ class QuestionCreateView(CreateView):
         context['tags'] = Tag.objects.all()  # for autocomplate
         return context
 
-    def get_success_url(self):
-        return reverse('qa:detail')
-
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.slug = get_unique_slug(obj.title, Question, 30)
         obj.create_by = self.request.user
         obj.save()
         obj.save_tags(self.request.POST.get('tags', False))
-        print(obj.slug)
         return HttpResponseRedirect(reverse('qa:detail', kwargs={'slug': obj.slug}))
 
 
@@ -100,19 +127,10 @@ class QuestionDetailWithAnswerListView(FormMixin, ListView):
         context['question'] = self._get_question()
         return context
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['current_q'] = self.request.GET.get('q', None)
-    #     return context
-
     def get_queryset(self):
         return self.model.objects.filter(question=self._get_question())
 
     def post(self, request, *args, **kwargs):
-        """
-        Handles POST requests, instantiating a form instance with the passed
-        POST variables and then checked for validity.
-        """
         form = self.get_form()
         if form.is_valid():
             return self.form_valid(form)

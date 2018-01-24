@@ -4,13 +4,10 @@
     {{ current_tag }}
 {% endblock %}
 
-{% block header %}
-    {% include 'includes/header.html' with search_value=current_tag %}
-{% endblock %}
 
 {% block content %}
     <div class="row border-bottom">
-        <h2 class="title col-12">Tag result:</h2>
+        <h2 class="col-12 title">{{ username }} questions</h2>
     </div>
     {% include 'includes/qa/include_questions.html' %}
 

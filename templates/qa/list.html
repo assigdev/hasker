@@ -8,6 +8,14 @@
 {% block content %}
     {% include 'includes/success_massage.html' %}
 
+    <div class="row border-bottom">
+        {% if hot %}
+                <h2 class="col-12 title"><a href="{% url 'qa:list' %}">New questions</a> | Hot questions</h2>
+            {% else %}
+                <h2 class="col-12 title">New questions | <a href="{% url 'qa:list' %}?order_by=hot">Hot questions</a></h2>
+        {% endif %}
+    </div>
+
     {% include 'includes/qa/include_questions.html' %}
 
 {% endblock %}

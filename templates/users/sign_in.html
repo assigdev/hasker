@@ -3,7 +3,7 @@
 {% block title %}Sign In{% endblock %}
 
 {% block content %}
-    <h2>Sign In</h2>
+    <h2 class="title">Sign In</h2>
     {% if user.is_authenticated %}
         <a class="btn" href="{% url 'users:logout' %}">Logout</a>
     {% else %}

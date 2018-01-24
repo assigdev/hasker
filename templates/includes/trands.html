@@ -1,4 +1,13 @@
 <div class="row align-items-center">
     <a class="offset-2 col-6 btn btn-outline-warning btn-lg" href="{% url 'qa:create' %}">Ask!</a>
     <h2 class="offset-2 col-6" style="margin-top: 15px">Trending</h2>
+    <div class="row">
+        {% for trand_question in trand_questions %}
+            <div class="col-12">
+                <span class="badge badge-primary trand_value">{{ trand_question.vote_count }}</span>
+                <a href="{% url 'qa:detail' trand_question.slug %}">{{ trand_question.title }}</a>
+            </div>
+        {% endfor %}
+    </div>
+
 </div>

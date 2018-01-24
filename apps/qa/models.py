@@ -33,6 +33,9 @@ class Question(models.Model):
                 tag.save()
                 self.tags.add(tag)
 
+    class Meta:
+        ordering = ['-create_at']
+
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name='answers')

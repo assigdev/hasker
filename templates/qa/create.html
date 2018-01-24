@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %}
-    Add Question
+    Ask a Question
 {% endblock %}
 
 {% block styles %}
@@ -10,18 +10,19 @@
 {% endblock %}
 
 {% block content %}
-     <h2>Add Question</h2>
+     <h2 class="title">Ask a Question</h2>
 
     <form action="{% url 'qa:create' %}"
           method="post"
-          enctype="multipart/form-data"
           class="pure-form pure-form-stacked"
     >
         {% csrf_token %}
-        {{ form.as_p }}
+        {% include 'includes/form_default.html' %}
         <div class="form-group">
-            <label for="tags">Tags:</label>
-            <textarea class="form-control" name="tags" id="tags" cols="30" rows="10"></textarea>
+            <div class="row">
+                <label class="col-3" for="tags">Tags:</label>
+                <textarea class="form-control col-6" name="tags" id="tags" cols="30" rows="10"></textarea>
+            </div>
         </div>
         <input type="submit" value="Save" class="form-control btn-primary col-2">
     </form>
