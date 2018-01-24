@@ -1,0 +1,19 @@
+.star {
+    visibility: hidden;
+    font-size: 32px;
+}
+
+.star-wrap:hover .star {
+    visibility: visible;
+    color: #555555 !important;
+}
+
+.star-wrap:hover .star:not(.is_true) {
+    visibility: visible;
+    color: #7f999b !important;
+}
+
+.star.is_true {
+    visibility: visible;
+    color: #46799b;
+}

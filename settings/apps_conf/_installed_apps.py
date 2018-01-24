@@ -7,13 +7,13 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.sites',
-    # 'django.contrib.sitemaps',
+    'django.contrib.humanize',
 ]
 
 MY_APPS = [
     'apps.qa',
     'apps.users',
+    'apps.votes',
 ]
 
 

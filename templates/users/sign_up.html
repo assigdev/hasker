@@ -14,7 +14,7 @@
           class="pure-form pure-form-stacked"
     >
         {% csrf_token %}
-        {{ form.as_p }}
+        {% include 'includes/form_default.html' %}
         <input type="submit" value="Create Account" class="form-control btn-primary col-2">
     </form>
 {% endblock %}

@@ -1,0 +1,49 @@
+{% load humanize %}
+
+{% for question in questions %}
+    <div class="row">
+        <div class="col-2">
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-center">
+                        {{ question.get_votes_number }}
+                    </p>
+                </div>
+                <div class="col-12"><p class="text-center">Votes</p></div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-center">
+                         {{ question.get_answers_number }}
+                    </p>
+                </div>
+                <div class="col-12"><p class="text-center">Answers</p></div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'qa:detail' question.slug %}"><h3>{{ question.title }}</h3></a>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                {% include 'includes/qa/tag.html' %}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12"><a class="text-center" href="">{{ question.create_by.username }}</a></div>
+                                <div class="col-12"><p>{{ question.create_at|naturaltime }}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}

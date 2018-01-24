@@ -13,3 +13,6 @@ def get_avatar_path(instance, filename):
 
 class User(AbstractUser):
     avatar = models.ImageField(upload_to=get_avatar_path, blank=True, null=True)
+
+    # def get_avatar_url(self):
+    #     if self.avatar

@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Home
+    {{ current_tag }}
 {% endblock %}
 
+{% block header %}
+    {% include 'includes/header.html' with search_value=current_tag %}
+{% endblock %}
 
 {% block content %}
-    {% include 'includes/success_massage.html' %}
+     <h2>Tag result:</h2>
 
     {% include 'includes/qa/include_questions.html' %}
 

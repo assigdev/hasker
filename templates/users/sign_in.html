@@ -10,7 +10,7 @@
 
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% include 'includes/form_default.html' %}
             <button class="btn btn-outline-primary" type="submit">Enter</button>
         </form>
     {% endif %}

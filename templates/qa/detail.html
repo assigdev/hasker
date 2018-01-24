@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Question | {{ question.title }}
+{% endblock %}
+
+{% block content %}
+{#        {% include 'includes/success_massage.html' %}#}
+        <div class="row">
+            <div class="col-2">
+                {% include 'includes/voting.html' with is_question=True pk=question.id vote_count=question.vote_count %}
+            </div>
+            <div class="col-10">
+                <h5>{{ question.title }}</h5>
+                <p>{{ question.content }}</p>
+                {% for tag in question.tags.all %}
+                    <h6><a href="{% url 'qa:tag'  tag.slug %}">{{ tag.title }}</a></h6>
+                {% endfor %}
+                {% include 'includes/author.html' with author=question.create_by %}
+            </div>
+        </div>
+
+        <h4>Answers</h4>
+        {% for answer in answers %}
+            <div class="row">
+            <div class="col-2">
+                {% include 'includes/voting.html' with is_question=False pk=answer.id vote_count=answer.vote_count %}
+                {% if user == question.create_by %}
+                <div class="col-12 star-wrap">
+                    <span
+                            class="oi oi-star js-answer_is_true star {% if answer.is_true %}is_true{% endif %}"
+                            data-url="{% url 'qa:set_answer_true' answer.id %}"
+                    >
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-10">
+                <p>{{ answer.content }}</p>
+                {% include 'includes/author.html' with author=answer.create_by %}
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+        <form method="post">
+            {% csrf_token %}
+            {% include 'includes/form_default.html' %}
+            <button class="btn btn-outline-primary" type="submit">Send</button>
+        </form>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/voting.js' %}"></script>
+{% endblock %}

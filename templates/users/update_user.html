@@ -18,7 +18,7 @@
         <p><span>Login: </span> {{ user.username }} </p>
 
         {% csrf_token %}
-        {{ form.as_p }}
+        {% include 'includes/form_default.html' %}
         <input type="submit" value="Save" class="form-control btn-primary col-2">
     </form>
 {% endblock %}

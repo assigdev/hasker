@@ -22,6 +22,7 @@ import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/', include('apps.users.urls', namespace='users')),
+    url(r'^votes/', include('apps.votes.urls', namespace='votes')),
     url(r'^', include('apps.qa.urls', namespace='qa')),
 
 ]

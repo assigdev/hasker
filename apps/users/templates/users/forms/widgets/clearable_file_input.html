@@ -1,0 +1,26 @@
+<div class="col-8">
+    <div class="row">
+        {% if widget.is_initial and  widget.value.url|length > 0 %}
+    {#        {{ widget.initial_text }}: #}
+            <div class="col-12">
+                <img  width="200" height="200" src="{{ widget.value.url }}">
+            </div>
+            <div class="col-12">
+                <p>{{ widget.value }}</p>
+            </div>
+
+            {% if not widget.required %}
+                <div class="col-12">
+                    <input  type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
+                    <label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>
+                </div>
+            {% endif %}
+            <br/>
+            <div class="col-2">
+                {{ widget.input_text }}:
+            </div>
+
+        {% endif %}
+    </div>
+    <input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} />
+</div>

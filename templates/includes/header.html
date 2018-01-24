@@ -4,21 +4,29 @@
             <h1><a href="{% url 'qa:list' %}">Hasker</a></h1>
         </div>
         <div class="col-4">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="search">
-                <div class="input-group-append">
-                    <span class="input-group-text">
-                        <span class="oi oi-magnifying-glass"></span>
-                    </span>
+            <form action="{% url 'qa:search' %}">
+                <div class="input-group mb-3">
+                        <input type="text"
+                               name="q"
+                               class="form-control js-search"
+                               value="{{ search_value }}"
+                               placeholder="search"
+                        >
+
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <span class="oi oi-magnifying-glass"></span>
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="col-4">
             {% if user.is_authenticated %}
                 <div class="row">
                     <div class="offset-4 col4">
                         <a href="{% url 'users:setting' %}">
-                            <img width="60px" src="{{ user.avatar.url }}" alt="">
+                            <img width="60px" src="{{ user.get_avatar_url }}" alt="">
                         </a>
                     </div>
                     <div class="offset-1 col4">

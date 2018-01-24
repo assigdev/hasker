@@ -1,0 +1,19 @@
+<div class="row">
+    <span class="js-vote col-12 oi oi-chevron-top text-center"
+          data-url="{% if is_question %}
+                        {% url 'votes:question_like' pk %}
+                    {% else %}
+                        {% url 'votes:answer_like' pk %}
+                    {% endif %}"
+    ></span>
+
+    <span class="js-vote_count col-12 text-center">{{ vote_count }}</span>
+
+    <span class="js-vote col-12 oi oi-chevron-bottom text-center"
+          data-url="{% if is_question %}
+                        {% url 'votes:question_dislike' pk %}
+                    {% else %}
+                        {% url 'votes:answer_dislike' pk %}
+                    {% endif %}"
+    ></span>
+</div>
