@@ -1,0 +1,30 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=hasker_user
+      - POSTGRES_PASSWORD=hasker_pass
+#      - POSTGRES_DB=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+
+  backend:
+    build: .
+    environment:
+      - DB_USER=hasker_user
+      - DB_PASSWORD=hasker_pass
+      - DB_HOST=db
+
+    depends_on:
+      - db
+    volumes:
+      - media:/app/media
+    command: "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+
+
+volumes:
+  db-data:
+  media:

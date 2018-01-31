@@ -1,0 +1,4 @@
+You have new answer for question:
+{{ question.title }}
+
+Go to read: {{ site_url }}{% url 'qa:detail' question.slug %}

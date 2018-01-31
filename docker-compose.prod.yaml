@@ -1,0 +1,38 @@
+version: '2'
+services:
+  db:
+    restart: always
+    image: postgres
+    environment:
+      - POSTGRES_USER=hasker_user
+      - POSTGRES_PASSWORD=hasker_pass
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+  backend:
+    restart: always
+    build: .
+    environment:
+#      - DB_NAME=hasker_db
+      - DB_USER=hasker_user
+      - DB_PASSWORD=hasker_pass
+      - DB_HOST=db
+      - VIRTUAL_PROTO=uwsgi
+      - VIRTUAL_HOST=localhost:8000
+    depends_on:
+      - db
+    volumes:
+      - media:/app/media
+  nginx-proxy:
+    restart: always
+    image: jwilder/nginx-proxy
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./settings/nginx:/etc/nginx/conf.d
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+volumes:
+  db-data:
+  media:

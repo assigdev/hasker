@@ -9,3 +9,7 @@ EMAIL_HOST_USER = 'noreply@bytehouse.ru'
 EMAIL_HOST_PASSWORD = 'eilgyvt4815162342'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+DEFAULT_TO_EMAIL = 'asipipi@gmail.com'
+FOR_AUTHOR_SUBJECT = 'Answer for your question'

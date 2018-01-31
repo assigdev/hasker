@@ -5,9 +5,10 @@ from django.views.generic import ListView, CreateView
 from django.views.generic.edit import FormMixin
 from django.http import Http404
 
-from utils import get_unique_slug
+from utils import get_unique_slug, send_email_from_template
 from .forms import QuestionForm, AnswerForm
 from .models import Question, Answer, Tag
+from settings import FOR_AUTHOR_SUBJECT, SITE_URL
 
 
 class QuestionListView(ListView):
@@ -123,7 +124,7 @@ class QuestionDetailWithAnswerListView(FormMixin, ListView):
         return self.question
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(QuestionDetailWithAnswerListView, self).get_context_data(**kwargs)
         context['question'] = self._get_question()
         return context
 
@@ -131,6 +132,7 @@ class QuestionDetailWithAnswerListView(FormMixin, ListView):
         return self.model.objects.filter(question=self._get_question())
 
     def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
         form = self.get_form()
         if form.is_valid():
             return self.form_valid(form)
@@ -141,4 +143,10 @@ class QuestionDetailWithAnswerListView(FormMixin, ListView):
         obj = form.save(commit=False)
         obj.create_by = self.request.user
         obj.save()
+        send_email_from_template(
+            obj.question.create_by.email,
+            FOR_AUTHOR_SUBJECT,
+            'mail/for_author.txt',
+            {'question': obj.question, 'site_url': SITE_URL}
+        )
         return HttpResponseRedirect(reverse('qa:detail',  kwargs={'slug': self._get_question().slug}))

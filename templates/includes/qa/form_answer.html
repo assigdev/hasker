@@ -1,0 +1,33 @@
+{% load class_atr_for_field %}
+
+{% if user.is_authenticated %}
+
+
+ <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+            {% if form.content.errors %}
+                {{ form.content|add_class:'form-control col-12 is-invalid'}}
+            {% else %}
+                {{ form.content|add_class:'form-control col-12 '}}
+            {% endif %}
+            <h4>{{ form.errors }}</h4>
+
+            {% for error in form.content.errors %}
+                <div class="invalid-feedback col-12">
+                    {{ error }}
+                </div>
+            {% endfor %}
+                <input type="hidden" name="question" value="{{ question.id }}">
+            </div>
+
+            <div class="col-12">
+                <button style="float:right; margin-top: 20px" class="btn btn-outline-primary" type="submit">Submit</button>
+            </div>
+
+        </div>
+    </form>
+    {% else %}
+    <h6><a href="{% url 'users:sign_in' %}">Sign In</a> for send answer.</h6>
+{% endif %}

@@ -58,20 +58,7 @@
     {% include 'includes/pagination.html' %}
 
     <h4>Your answer</h4>
-    <form method="post">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col-12">
-                {{ form.content|add_class:'form-control col-12' }}
-            </div>
-
-            <div class="col-12">
-                <button style="float:right; margin-top: 20px" class="btn btn-outline-primary" type="submit">Submit</button>
-            </div>
-
-        </div>
-    </form>
-
+   {% include 'includes/qa/form_answer.html' %}
 
 {% endblock %}
 

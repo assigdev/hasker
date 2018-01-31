@@ -19,7 +19,6 @@ def get_unique_slug(for_slug, model, size=None):
 
 def send_email_from_template(recipient, subject, message_template_name, context, ):
     template = get_template(message_template_name)
-    context = Context(context)
     message = template.render(context)
     send_mail(
         subject,
