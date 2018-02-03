@@ -16,4 +16,4 @@ RUN pip install pipenv && pipenv install --system --deploy
 EXPOSE 8000
 ENV PORT 8000
 
-#CMD ["uwsgi", "/opt/hasker/settings/uwsgi.ini"]
+CMD ["uwsgi", "/opt/hasker/settings/uwsgi.ini"]

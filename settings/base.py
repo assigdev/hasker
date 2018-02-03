@@ -19,12 +19,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY', '6-ns_%8%l(59qr&x_tzn-5tqsh6ngyz8**)z-4=pxj8-e6d!d2')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '0.0.0.0').split(',')
 
+SITE_URL = os.environ.get('SITE_URL', '127.0.0.1:8000')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -116,20 +119,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = (os.path.join(BASE_DIR, "staticfiles"))
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
-
-STATIC_ROOT = (
-    os.path.join(BASE_DIR, "../static")
-)
-
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
-
-MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 ADMIN_MEDIA_PREFIX = '/static/admin/'
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'q$#rl14*r(6+ah1fe-qqy$odxpfn+glfl3-j&q8nyn3w-^0l1e'
