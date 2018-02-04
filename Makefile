@@ -46,10 +46,8 @@ configure:
 	docker-compose exec backend python manage.py createsuperuser
 
 update:
-	docker-compose stop $(WEB)
 	docker-compose exec backend python manage.py migrate
 	docker-compose exec backend python manage.py collectstatic
-	docker-compose start $(WEB)
 
 dump: ## dump db, usage 'make dump path=/path/to/dumps'
 	docker-compose exec --user postgres $(DB) pg_dumpall --clean | gzip > $(path)/project-$(DATE).sql.gz
