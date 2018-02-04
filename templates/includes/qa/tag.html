@@ -1,5 +1,5 @@
 {% for tag in question.tags.all %}
-        <a href="{% url 'qa:tag' tag.slug %}">
+        <a href="{% url 'qa:tag' tag.title %}">
             <span class="badge badge-secondary tag">{{ tag.title }}</span>
         </a>
 {% endfor %}

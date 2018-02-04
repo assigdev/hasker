@@ -13,3 +13,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DEFAULT_TO_EMAIL = 'asipipi@gmail.com'
 FOR_AUTHOR_SUBJECT = 'Answer for your question'
+DEFAULT_AVATAR_URL = '/static/img/default/default-avatar-male.png'

@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, CreateView
 from django.views.generic.edit import FormMixin
 from django.http import Http404
+from django.db.models import Q
 
 from utils import get_unique_slug, send_email_from_template
 from .forms import QuestionForm, AnswerForm
@@ -39,7 +40,7 @@ class QuestionSearchListView(QuestionListView):
         queryset = super().get_queryset()
         search_string = self.request.GET.get('q', None)
         if search_string is not None:
-            queryset = queryset.filter(title__icontains=search_string)
+            queryset = queryset.filter(Q(title__icontains=search_string) | Q(content__icontains=search_string))
             queryset = queryset.order_by('title')
         return queryset
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from settings import DEFAULT_AVATAR_URL
 
 
 def get_avatar_path(instance, filename):
@@ -12,7 +13,10 @@ def get_avatar_path(instance, filename):
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(upload_to=get_avatar_path, blank=True, null=True)
+    avatar = models.ImageField(upload_to=get_avatar_path)
 
     def get_avatar_url(self):
-        return self.avatar.url
+        if self.avatar:
+            return self.avatar.url
+        else:
+            return DEFAULT_AVATAR_URL

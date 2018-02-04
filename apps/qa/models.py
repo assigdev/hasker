@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.text import slugify
 
 from apps.users.models import User
 
@@ -29,7 +28,7 @@ class Question(models.Model):
         if tag_names:
             tag_names_list = tag_names.split(',')
             for tag_name in tag_names_list:
-                tag, created = Tag.objects.get_or_create(title=tag_name, slug=slugify(tag_name))
+                tag, created = Tag.objects.get_or_create(title=tag_name)
                 tag.save()
                 self.tags.add(tag)
 
@@ -51,10 +50,9 @@ class Answer(models.Model):
 
 class Tag(models.Model):
     title = models.CharField(max_length=24)
-    slug = models.SlugField(max_length=24)
 
     def __str__(self):
         return self.title
     
     def get_tag_for_search(self):
-        return 'tag:{0}'.format(self.slug)
+        return 'tag:{0}'.format(self.title)

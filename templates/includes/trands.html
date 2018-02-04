@@ -5,7 +5,7 @@
         {% for trand_question in trand_questions %}
             <div class="col-12">
                 <span class="badge badge-primary trand_value">{{ trand_question.vote_count }}</span>
-                <a href="{% url 'qa:detail' trand_question.slug %}">{{ trand_question.title }}</a>
+                <a href="{% url 'qa:detail' trand_question.slug %}">{{ trand_question.title|truncatechars:28 }}</a>
             </div>
         {% endfor %}
     </div>

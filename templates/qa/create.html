@@ -10,22 +10,29 @@
 {% endblock %}
 
 {% block content %}
-     <h2 class="title">Ask a Question</h2>
+    <h2 class="title">Ask a Question</h2>
 
-    <form action="{% url 'qa:create' %}"
-          method="post"
-          class="pure-form pure-form-stacked"
-    >
-        {% csrf_token %}
-        {% include 'includes/form_default.html' %}
-        <div class="form-group">
-            <div class="row">
-                <label class="col-3" for="tags">Tags:</label>
-                <textarea class="form-control col-6" name="tags" id="tags" cols="30" rows="10"></textarea>
+    {% if user.is_authenticated %}
+
+        <form action="{% url 'qa:create' %}"
+              method="post"
+              class="pure-form pure-form-stacked"
+        >
+            {% csrf_token %}
+            {% include 'includes/form_default.html' %}
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-3" for="tags">Tags:</label>
+                    <textarea class="form-control col-6" name="tags" id="tags" cols="30" rows="10"></textarea>
+                </div>
             </div>
-        </div>
-        <input type="submit" value="Save" class="form-control btn-primary col-2">
-    </form>
+            <input type="submit" value="Save" class="form-control btn-primary col-2">
+        </form>
+
+        {% else %}
+            <h6><a href="{% url 'users:sign_in' %}">Sign In</a> for ask.</h6>
+    {% endif %}
+
 {% endblock %}
 
 {% block scripts %}
@@ -38,6 +45,6 @@
                 '{{ tag.title }}',
             {% endfor %}
         ];
-        $('#tags').tagEditor({ autocomplete: { 'source': availableTags, minLength: 2 }, maxTags: 3 });
+        $('#tags').tagEditor({autocomplete: {'source': availableTags, minLength: 2}, maxTags: 3});
     </script>
 {% endblock %}
