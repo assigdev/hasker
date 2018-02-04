@@ -25,6 +25,7 @@ class Question(models.Model):
         return 0
 
     def save_tags(self, tag_names):
+        tag_names = tag_names.replace(' ', '')
         if tag_names:
             tag_names_list = tag_names.split(',')
             for tag_name in tag_names_list:
