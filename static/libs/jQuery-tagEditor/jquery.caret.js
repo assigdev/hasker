@@ -7,7 +7,6 @@
       if (target) {
         //HTML5
         if (window.getSelection) {
-          //contenteditable
           if (isContentEditable) {
             target.focus();
             var range1 = window.getSelection().getRangeAt(0),
