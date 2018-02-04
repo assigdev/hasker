@@ -10,10 +10,10 @@ services:
       - DB_USER=hasker_user
       - DB_PASSWORD=hasker_pass
       - DB_HOST=db
-      - SITE_URl=0.0.0.0
-      - ALLOWED_HOSTS=0.0.0.0
+      - SITE_URl=35.196.4.115
+      - ALLOWED_HOSTS=35.196.4.115
       - VIRTUAL_PROTO=uwsgi
-      - VIRTUAL_HOST=0.0.0.0
+      - VIRTUAL_HOST=35.196.4.115
   nginx-proxy:
     restart: always
     image: jwilder/nginx-proxy
