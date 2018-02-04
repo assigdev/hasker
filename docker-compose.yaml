@@ -17,6 +17,7 @@ services:
       - db
     volumes:
       - media:/opt/hasker/media
+      - staticfiles:/opt/hasker/staticfiles
 volumes:
   db-data:
   media:
