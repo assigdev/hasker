@@ -1,20 +1,20 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d78ec28246f8d830f4cc1df793f2b2c43b944a86c0dbbf7f65d245ef389b2a8b"
+            "sha256": "6bc534fa3f15b58d4f46ebdad0769960432aff792b09975b6b90c4ae752c19fa"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
-            "implementation_version": "3.6.3",
+            "implementation_version": "0",
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "4.13.0-25-generic",
+            "platform_release": "4.13.0-32-generic",
             "platform_system": "Linux",
-            "platform_version": "#29-Ubuntu SMP Mon Jan 8 21:14:41 UTC 2018",
-            "python_full_version": "3.6.3",
-            "python_version": "3.6",
-            "sys_platform": "linux"
+            "platform_version": "#35-Ubuntu SMP Thu Jan 25 09:13:46 UTC 2018",
+            "python_full_version": "2.7.14",
+            "python_version": "2.7",
+            "sys_platform": "linux2"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -27,6 +27,14 @@
         ]
     },
     "default": {
+        "contextlib2": {
+            "hashes": [
+                "sha256:f5260a6e679d2ff42ec91ec5252f4eeffdcf21053db9113bd0a8e4d953769c00",
+                "sha256:509f9419ee91cdd00ba34443217d5ca51f5a364a404e1dce9e8979cea969ca48"
+            ],
+            "markers": "python_version < '3.2'",
+            "version": "==0.5.5"
+        },
         "django": {
             "hashes": [
                 "sha256:90952c46d2b7b042db00e98b05f5dd97a5775822948d46fd82ff074d8ac75853",
@@ -136,6 +144,13 @@
                 "sha256:fae4cffc040921b8a2d60c6cf0b5d662c1190fe54d718271db4eb17d44a185b7"
             ],
             "version": "==2017.3"
+        },
+        "raven": {
+            "hashes": [
+                "sha256:0adae40e004dfe2181d1f2883aa3d4ca1cf16dbe449ae4b445b011c6eb220a90",
+                "sha256:84da75114739191bdf2388f296ffd6177e83567a7fbaf2701e034ad6026e4f3b"
+            ],
+            "version": "==6.5.0"
         }
     },
     "develop": {}

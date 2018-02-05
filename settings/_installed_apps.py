@@ -18,7 +18,7 @@ MY_APPS = [
 
 
 INSTALLED_APPS = [
-
+    'raven.contrib.django.raven_compat',
 
 ]
 
