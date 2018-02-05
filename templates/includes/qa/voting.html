@@ -1,5 +1,5 @@
 <div class="row">
-    {% if obj.create_by != user %}
+    {% if obj.create_by != user and user.is_authenticated %}
         <span class="js-vote col-12 oi oi-chevron-top text-center"
               data-url="{% if is_question %}
                         {% url 'votes:question_like' obj.pk %}
@@ -11,7 +11,7 @@
 
     <span class="js-vote_count col-12 text-center">{{ obj.vote_count }}</span>
 
-    {% if obj.create_by != user %}
+    {% if obj.create_by != user and user.is_authenticated %}
         <span class="js-vote col-12 oi oi-chevron-bottom text-center"
               data-url="{% if is_question %}
                             {% url 'votes:question_dislike' obj.pk %}

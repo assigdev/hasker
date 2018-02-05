@@ -1,5 +1,8 @@
 # Hasker
 
+stackoverflow like application
+
+# Usages:
 ## For prodoction
 
 clone repository:
@@ -26,6 +29,11 @@ for configure (migrate, collectstatic and createsuperuser) in another terminal c
 for update collectstatic and migrations
 
     $ make update
+
+for reload app
+
+    $ docker-compose stop
+    $ make prod
 
 ## For dev
 

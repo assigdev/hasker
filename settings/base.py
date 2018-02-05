@@ -27,7 +27,7 @@ DEBUG = os.getenv('DEBUG', True)
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '0.0.0.0').split(',')
 
-SITE_URL = os.environ.get('SITE_URL', '127.0.0.1:8000')
+SITE_URL = os.environ.get('SITE_URL', '0.0.0.0:8000')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
