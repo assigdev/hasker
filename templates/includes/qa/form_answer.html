@@ -1,6 +1,6 @@
 {% load class_atr_for_field %}
 
-{% if user == question.creat_by %}
+{% if user == question.create_by %}
     <h6>You can not answer yourself</h6>
 {% else %}
     {% if user.is_authenticated %}
