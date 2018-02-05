@@ -22,7 +22,7 @@ class QuestionListView(ListView):
         queryset = super(QuestionListView, self).get_queryset()
         order_by = self.request.GET.get('order_by', None)
         if order_by == 'hot':
-            queryset = queryset.order_by('-vote_count')
+            queryset = queryset.order_by('-vote_count', '-create_at')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -41,7 +41,7 @@ class QuestionSearchListView(QuestionListView):
         search_string = self.request.GET.get('q', None)
         if search_string is not None:
             queryset = queryset.filter(Q(title__icontains=search_string) | Q(content__icontains=search_string))
-            queryset = queryset.order_by('-vote_count')
+            queryset = queryset.order_by('-vote_count', '-create_at')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -57,7 +57,7 @@ class QuestionTagListView(QuestionListView):
         queryset = super().get_queryset()
         tag = self.kwargs.get('tag')
         queryset = queryset.filter(tags__title=tag)
-        queryset = queryset.order_by('-vote_count')
+        queryset = queryset.order_by('-vote_count', '-create_at')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -130,7 +130,7 @@ class QuestionDetailWithAnswerListView(FormMixin, ListView):
         return context
 
     def get_queryset(self):
-        return self.model.objects.filter(question=self._get_question()).order_by('-vote_count')
+        return self.model.objects.filter(question=self._get_question()).order_by('-vote_count', '-create_at')
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
