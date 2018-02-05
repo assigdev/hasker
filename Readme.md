@@ -8,10 +8,15 @@ clone repository:
     
 install docker and docker-compose for your OS.
 
+
+
 Then up docker containers:
   
     $ cd hasker
     $ make prod
+
+**if you run docker with sudo, run make with sudo**
+    
     
 for configure (migrate, collectstatic and createsuperuser) in another terminal connection
 
@@ -39,6 +44,8 @@ Then up docker containers:
 For next up use
 
     $ make dev
+
+**if you run docker with sudo, run make with sudo**
 
     
 for configure (migrate, collectstatic and createsuperuser) in another terminal connection
