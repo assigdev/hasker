@@ -12,7 +12,7 @@
             <h2 class="title">{{ question.title }}</h2>
         </div>
         <div class="col-2">
-            {% include 'includes/qa/voting.html' with is_question=True pk=question.id vote_count=question.vote_count %}
+            {% include 'includes/qa/voting.html' with is_question=True obj=question %}
         </div>
         <div class="col-10">
             <div class="row">
@@ -34,7 +34,7 @@
     {% for answer in answers %}
         <div class="row border-bottom">
             <div class="col-2">
-                {% include 'includes/qa/voting.html' with is_question=False pk=answer.id vote_count=answer.vote_count %}
+                {% include 'includes/qa/voting.html' with is_question=False obj=answer %}
                 {% if user == question.create_by %}
                     <div class="col-12 star-wrap">
                     <span
