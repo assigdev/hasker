@@ -130,7 +130,7 @@ class QuestionDetailWithAnswerListView(FormMixin, ListView):
         return context
 
     def get_queryset(self):
-        return self.model.objects.filter(question=self._get_question())
+        return self.model.objects.filter(question=self._get_question()).order_by('-vote_count')
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()

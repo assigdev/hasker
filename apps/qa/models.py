@@ -48,6 +48,9 @@ class Answer(models.Model):
     def __str__(self):
         return "answer {0} for question: {1}".format(self.id, self.question.title)
 
+    class Meta:
+        ordering = ['-create_at']
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=24)
