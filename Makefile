@@ -34,6 +34,7 @@ endif
 dev_easy:
 ifeq ($(b), 1)
 	pip install pipenv && pipenv install
+	pipenv run python manage.py migrate
 endif
 	pipenv run python manage.py runserver 0.0.0.0:$(PORT)
 
