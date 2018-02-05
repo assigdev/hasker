@@ -52,7 +52,8 @@ for configure (migrate, collectstatic and createsuperuser) in another terminal c
 
     $ make configure
 
-## For dev with sqlite without docker containers
+## For dev with sqlite without docker containers(Not recommended
+)
 
 clone repository:
 
