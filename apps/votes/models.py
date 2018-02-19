@@ -52,6 +52,17 @@ class AbstractVote(models.Model):
     def get_dislike_users_number(self):
         return self.dislike_users.count()
 
+    @classmethod
+    def voting(cls, user, qa_model_class, pk, like):
+        qa_object = qa_model_class.objects.get(pk=pk)
+        vote, created = cls.objects.get_or_create(model=qa_object)
+        if like:
+            vote.like(user)
+        else:
+            vote.dislike(user)
+        vote.model.save()
+        return vote
+
 
 class QuestionVote(AbstractVote):
     model = models.OneToOneField(Question, related_name='question_votes')
