@@ -1,7 +1,6 @@
 from django.core.mail import send_mail
-from django.template import Context
 from django.template.loader import get_template
-from settings import DEFAULT_FROM_EMAIL
+from hasker.settings import DEFAULT_FROM_EMAIL
 
 
 def get_unique_slug(for_slug, model, size=None):

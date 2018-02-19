@@ -1,13 +1,12 @@
 from django.db import models
-
-from apps.users.models import User
+from django.conf import settings
 
 
 class Question(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=40)
     content = models.TextField()
-    create_by = models.ForeignKey(User, related_name='questions')
+    create_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='questions')
     create_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField('Tag')
     vote_count = models.SmallIntegerField(default=0)
@@ -40,7 +39,7 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name='answers')
     content = models.TextField()
-    create_by = models.ForeignKey(User, related_name='answers')
+    create_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='answers')
     create_at = models.DateTimeField(auto_now_add=True)
     is_true = models.BooleanField(default=False)
     vote_count = models.SmallIntegerField(default=0)

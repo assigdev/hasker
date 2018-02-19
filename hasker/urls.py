@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-import settings
+from hasker import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

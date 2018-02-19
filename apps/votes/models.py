@@ -1,6 +1,7 @@
 from django.db import models
 from apps.qa.models import Question, Answer
 from apps.users.models import User
+from django.db import transaction
 
 
 class VoteModelExample(models.Model):
@@ -21,6 +22,7 @@ class AbstractVote(models.Model):
     def vote_count_down(self):
         self.model.vote_count -= 1
 
+    @transaction.atomic
     def like(self, user):
         if self.like_users.filter(pk=user.pk).exists():
             self.like_users.remove(user)
@@ -32,6 +34,7 @@ class AbstractVote(models.Model):
             self.like_users.add(user)
             self.vote_count_up()
 
+    @transaction.atomic
     def dislike(self, user):
         if self.dislike_users.filter(pk=user.pk).exists():
             self.dislike_users.remove(user)

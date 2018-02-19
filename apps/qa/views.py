@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, CreateView
 from django.views.generic.edit import FormMixin
@@ -9,7 +9,7 @@ from django.db.models import Q
 from utils import get_unique_slug, send_email_from_template
 from .forms import QuestionForm, AnswerForm
 from .models import Question, Answer, Tag
-from settings import FOR_AUTHOR_SUBJECT, SITE_URL
+from hasker.settings import FOR_AUTHOR_SUBJECT, SITE_URL
 
 
 class QuestionListView(ListView):
@@ -39,7 +39,7 @@ class QuestionSearchListView(QuestionListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         search_string = self.request.GET.get('q', None)
-        if search_string is not None:
+        if search_string is not None and len(search_string) <= 200:
             queryset = queryset.filter(Q(title__icontains=search_string) | Q(content__icontains=search_string))
             queryset = queryset.order_by('-vote_count', '-create_at')
         return queryset

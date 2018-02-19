@@ -9,7 +9,9 @@ from .forms import HaskerUserCreationForm, UserUpdateForm
 class UserCreateView(CreateView):
     template_name = 'users/sign_up.html'
     form_class = HaskerUserCreationForm
-    success_url = '/'
+
+    def get_success_url(self):
+        return reverse('users:setting')
 
     def form_valid(self, form):
         messages.success(self.request, 'The account was successfully created. Now you can enter')
