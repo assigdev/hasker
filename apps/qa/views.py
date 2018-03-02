@@ -4,12 +4,9 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, CreateView
 from django.views.generic.edit import FormMixin
 from django.http import Http404
-from django.db.models import Q
 
-from utils import get_unique_slug, send_email_from_template
 from .forms import QuestionForm, AnswerForm
 from .models import Question, Answer, Tag
-from hasker.settings import FOR_AUTHOR_SUBJECT, SITE_URL
 
 
 class QuestionListView(ListView):
@@ -21,9 +18,7 @@ class QuestionListView(ListView):
     def get_queryset(self):
         queryset = super(QuestionListView, self).get_queryset()
         order_by = self.request.GET.get('order_by', None)
-        if order_by == 'hot':
-            queryset = queryset.order_by('-vote_count', '-create_at')
-        return queryset
+        return queryset.ordering_if_hot(order_by)
 
     def get_context_data(self, **kwargs):
         context = super(QuestionListView, self).get_context_data(**kwargs)
@@ -39,10 +34,7 @@ class QuestionSearchListView(QuestionListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         search_string = self.request.GET.get('q', None)
-        if search_string is not None and len(search_string) <= 200:
-            queryset = queryset.filter(Q(title__icontains=search_string) | Q(content__icontains=search_string))
-            queryset = queryset.order_by('-vote_count', '-create_at')
-        return queryset
+        return queryset.search(search_string)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -57,8 +49,7 @@ class QuestionTagListView(QuestionListView):
         queryset = super().get_queryset()
         tag = self.kwargs.get('tag')
         queryset = queryset.filter(tags__title=tag)
-        queryset = queryset.order_by('-vote_count', '-create_at')
-        return queryset
+        return queryset.ordering()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -72,10 +63,7 @@ class QuestionUserListView(QuestionListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         username = self.kwargs.get('username', None)
-        if username is None:
-            raise Http404
-        queryset = queryset.filter(create_by__username=username)
-        return queryset
+        return queryset.get_user_questions(username)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -96,10 +84,8 @@ class QuestionCreateView(CreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.slug = get_unique_slug(obj.title, Question, 30)
-        obj.create_by = self.request.user
-        obj.save()
-        obj.save_tags(self.request.POST.get('tags', False))
+        tags = self.request.POST.get('tags', False)
+        obj.save_with_arguments(self.request.user, tags)
         return HttpResponseRedirect(reverse('qa:detail', kwargs={'slug': obj.slug}))
 
 
@@ -143,11 +129,5 @@ class QuestionDetailWithAnswerListView(FormMixin, ListView):
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.create_by = self.request.user
-        obj.save()
-        send_email_from_template(
-            obj.question.create_by.email,
-            FOR_AUTHOR_SUBJECT,
-            'mail/for_author.txt',
-            {'question': obj.question, 'site_url': SITE_URL}
-        )
+        obj.save(send_email=True)
         return HttpResponseRedirect(reverse('qa:detail',  kwargs={'slug': self._get_question().slug}))
