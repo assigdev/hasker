@@ -37,6 +37,8 @@ class QuestionListViewTest(TestCase):
         response = self.client.get(reverse('qa:list'))
         self.assertEquals(response.context[-1]['object_list'].first().title, 'title19')
         self.assertEquals(response.context[-1]['object_list'].last().title, 'title0')
+
+    def test_queryset_hot(self):
         response = self.client.get(reverse('qa:list'), {'order_by': 'hot'})
         self.assertEquals(response.context[-1]['object_list'].first().title, 'title0')
         self.assertEquals(response.context[-1]['object_list'].last().title, 'title19')
@@ -68,7 +70,7 @@ class QuestionSearchListViewTest(TestCase):
         response = self.client.get(reverse('qa:search'), {'q': 'title'})
         self.assertEquals(response.context[-1]['current_q'], 'title')
 
-    def test_queryset(self):
+    def test_queryset_title_search(self):
         response = self.client.get(reverse('qa:search'), {'q': 'title1'})
         self.assertEquals(response.context[-1]['object_list'].count(), 11)
         response = self.client.get(reverse('qa:search'), {'q': 'title10'})
@@ -76,11 +78,13 @@ class QuestionSearchListViewTest(TestCase):
         response = self.client.get(reverse('qa:search'), {'q': 'title'})
         self.assertEquals(response.context[-1]['object_list'].count(), 20)
 
+    def test_queryset_content_search(self):
         response = self.client.get(reverse('qa:search'), {'q': 'content19'})
         self.assertEquals(response.context[-1]['object_list'].count(), 1)
         response = self.client.get(reverse('qa:search'), {'q': 'content'})
         self.assertEquals(response.context[-1]['object_list'].count(), 20)
 
+    def test_queryset_title_and_content_search(self):
         response = self.client.get(reverse('qa:search'), {'q': '19'})
         self.assertEquals(response.context[-1]['object_list'].count(), 1)
 

@@ -1,9 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, CreateView
 from django.views.generic.edit import FormMixin
-from django.http import Http404
 
 from .forms import QuestionForm, AnswerForm
 from .models import Question, Answer, Tag
@@ -103,11 +101,7 @@ class QuestionDetailWithAnswerListView(FormMixin, ListView):
     def _get_question(self):
         if self.question is None:
             slug = self.kwargs.get('slug', None)
-            if slug:
-                obj = get_object_or_404(Question, slug=slug)
-                self.question = obj
-            else:
-                raise Http404
+            self.question = Question.get_question(slug)
         return self.question
 
     def get_context_data(self, **kwargs):

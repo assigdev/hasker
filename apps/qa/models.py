@@ -5,6 +5,7 @@ from django.http import Http404
 from django.db import transaction
 from hasker.settings import FOR_AUTHOR_SUBJECT, SITE_URL
 from utils import get_unique_slug, send_email_from_template
+from django.shortcuts import get_object_or_404
 
 
 class QuestionQuerySet(models.QuerySet):
@@ -65,6 +66,14 @@ class Question(models.Model):
                 tag, created = Tag.objects.get_or_create(title=tag_name)
                 tag.save()
                 self.tags.add(tag)
+
+    @classmethod
+    def get_question(cls, slug):
+        if slug:
+            obj = get_object_or_404(cls, slug=slug)
+            return obj
+        else:
+            raise Http404
 
     class Meta:
         ordering = ['-create_at']
